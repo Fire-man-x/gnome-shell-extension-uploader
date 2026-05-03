@@ -27,6 +27,7 @@ userAgent = 'GnomeShellExtensionUploader/1.0'
 # URL for login
 login_url = "https://extensions.gnome.org/accounts/login/"
 upload_url = "https://extensions.gnome.org/upload/"
+upload_post_url = "https://extensions.gnome.org/api/v1/extensions"
 
 # 1. Load login page and obtain CSRF token
 session = requests.Session()
@@ -107,10 +108,19 @@ headers = {
 files = {'source': open(extension_zip_file, 'rb')}
 
 # 6. Send POST request with data from form, CSRF token, headers, files, cookies
-upload_response = session.post(upload_url, data=upload_form_data, headers=headers, files=files, cookies=session.cookies, timeout=60, allow_redirects=False)
+upload_response = session.post(upload_post_url, data=upload_form_data, headers=headers, files=files, cookies=session.cookies, timeout=60, allow_redirects=False)
 
 # 7. Response
 if upload_response.status_code == 200:
+	print('')
+	print("Upload was successed.")
+
+	document = BeautifulSoup(upload_response.text, 'html.parser')
+	errorMessage = document.find('p', {'class': 'message error'})
+	if(errorMessage):
+		print(errorMessage.text)
+		exit(1)
+if upload_response.status_code == 201:
 	print('')
 	print("Upload was successed.")
 
