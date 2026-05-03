@@ -27,7 +27,7 @@ jobs:
 	upload_extension:
 		steps:
 			-   name: Upload to GNOME Extensions
-				uses: fire-man-x/gnome-shell-extension-uploader@v1
+				uses: fire-man-x/gnome-shell-extension-uploader@v2
 				with:
 					gnome_username: ${{ secrets.GNOME_USERNAME }}
 					gnome_password: ${{ secrets.GNOME_PASSWORD }}
@@ -36,7 +36,7 @@ jobs:
 
 ## Full example
 
-This example responds to the release of a version tag, e.g. `v1`.
+This example responds to the release of a version tag, e.g. `v2`.
 Then it first creates a release and makes a `zip` file. Then it uploads the `zip` file to https://extensions.gnome.org/ to your account specified by your credentials `GNOME_USERNAME` and `GNOME_PASSWORD`.
 
 Here is an example content of file and how to set it up:
@@ -119,7 +119,7 @@ jobs:
 				run: if [ -f "./src/${{ env.PROJECT_PACKAGE_NAME }}.shell-extension.zip" ]; then echo "File exists"; else echo "File not found"; exit 1; fi
 
 			-   name: Upload to GNOME Extensions
-				uses: fire-man-x/gnome-shell-extension-uploader@v1
+				uses: fire-man-x/gnome-shell-extension-uploader@v2
 				with:
 					gnome_username: ${{ secrets.GNOME_USERNAME }}
 					gnome_password: ${{ secrets.GNOME_PASSWORD }}
